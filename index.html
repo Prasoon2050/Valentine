@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel (Classic Serif), Montserrat (Clean Sans), Great Vibes (Cursive) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Custom Fonts */
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-montserrat {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .font-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Dark Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(0, 0, 0, 0.4);
+            /* Darker base */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Subtle white border */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Ambient Glow Behind Card */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+        }
+
+        /* Smooth Transitions */
+        .fade-in {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button Hover Effects - Luxury Style */
+        .btn-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+            /* Glowing white shadow */
+        }
+
+        /* No Button specific transition */
+        #no-btn {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Photo Frame - Polaroid Style */
+        .photo-frame {
+            position: relative;
+            background: #fff;
+            /* White border contrasts nicely on dark bg */
+            padding: 12px;
+            padding-bottom: 40px;
+            /* Polaroid bottom space */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: rotate(-3deg);
+            transition: transform 0.6s ease;
+        }
+
+        .photo-frame:hover {
+            transform: rotate(2deg) scale(1.05);
+            /* Slight opposite tilt on hover */
+            z-index: 50;
+        }
+
+        .photo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: sepia(20%);
+            /* Vintage look */
+        }
+
+        /* Cursor Effect for typing */
+        .typing-cursor::after {
+            content: '|';
+            color: #fff;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-black min-h-screen relative overflow-hidden flex items-center justify-center font-montserrat selection:bg-red-900 selection:text-white">
+
+    <!-- Background Gradient Layer -->
+    <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900 via-black to-black z-0">
+    </div>
+
+    <!-- Background Canvas for Particles -->
+    <canvas id="bg-canvas"
+        class="absolute top-0 left-0 w-full h-full pointer-events-none z-0 mix-blend-screen"></canvas>
+
+    <!-- Decorative Glow Orbs - Darker, moodier colors -->
+    <div class="glow-orb w-[500px] h-[500px] bg-red-800 top-[-100px] left-[-100px] mix-blend-screen"></div>
+    <div
+        class="glow-orb w-[400px] h-[400px] bg-red-900 bottom-[-50px] right-[-50px] mix-blend-screen animation-delay-2000">
+    </div>
+
+    <!-- Main Container -->
+    <main class="relative z-10 w-full max-w-lg px-4">
+
+        <!-- Glass Card -->
+        <div class="glass-card rounded-xl p-8 md:p-12 text-center transition-all duration-1000 transform"
+            id="main-card">
+
+            <!-- Step 1: Initial State -->
+            <div id="step-initial" class="flex flex-col items-center space-y-6">
+                <!-- Editable Name -->
+                <h1
+                    class="font-cinzel text-5xl md:text-6xl font-bold text-white tracking-wide min-h-[80px] drop-shadow-lg">
+                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                </h1>
+
+                <p class="text-gray-300 text-lg md:text-xl font-light tracking-wide opacity-0 transition-opacity duration-1000 delay-1000"
+                    id="subtext">
+                    I have a question for you...
+                </p>
+
+                <button id="reveal-btn" onclick="revealQuestion()"
+                    class="btn-hover mt-8 px-10 py-3 bg-white text-black font-cinzel font-bold tracking-widest uppercase text-sm rounded shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:bg-gray-100 transition-all opacity-0 pointer-events-none transform translate-y-4">
+                    Open Letter
+                </button>
+            </div>
+
+            <!-- Step 2: The Question (Initially Hidden) -->
+            <div id="step-question"
+                class="hidden flex-col items-center space-y-10 relative min-h-[350px] justify-center">
+                <!-- Heart Icon with Glow -->
+                <div
+                    class="text-red-500 text-7xl animate-pulse drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] filter brightness-125">
+                    ❤️</div>
+
+                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white leading-relaxed drop-shadow-md">
+                    Will you be my Valentine?
+                </h2>
+
+                <div class="flex flex-wrap justify-center gap-6 w-full relative z-20">
+                    <!-- YES Button -->
+                    <button onclick="handleYes()"
+                        class="btn-hover px-12 py-4 bg-red-700 text-white font-cinzel font-bold text-lg rounded shadow-lg hover:bg-red-600 transition-colors z-20">
+                        YES
+                    </button>
+
+                    <!-- NO Button (The Runner) -->
+                    <button id="no-btn" onmouseover="moveButton()" ontouchstart="moveButton()"
+                        class="px-12 py-4 border border-gray-500 text-gray-400 font-cinzel font-bold text-lg rounded bg-transparent hover:bg-white/5 transition-colors z-10">
+                        NO
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Success Celebration (Initially Hidden) -->
+            <div id="step-success" class="hidden flex-col items-center space-y-6 fade-in">
+                <h2 class="font-vibes text-6xl text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                    She said Yes!
+                </h2>
+
+                <p class="text-gray-300 text-lg font-light tracking-wider uppercase font-cinzel text-sm">
+                    Let the romance begin...
+                </p>
+
+                <!-- Photo Frame with Romantic Image -->
+                <div
+                    class="photo-frame mt-6 rotate-2 transform hover:rotate-0 transition duration-500 ease-in-out cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80"
+                        alt="Couple holding hands"
+                        class="photo-img grayscale hover:grayscale-0 transition duration-500">
+                    <div class="absolute bottom-3 left-0 w-full text-center font-vibes text-2xl text-gray-800">Us
+                        soon...</div>
+                </div>
+
+                <div class="pt-8 text-[10px] text-gray-500 font-montserrat tracking-[0.3em] uppercase opacity-60">
+                    February 14, 2025
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // --- 0. Typing Effect ---
+        const textToType = "Hey Beautiful...";
+        const typingElement = document.getElementById('typing-text');
+        const subtext = document.getElementById('subtext');
+        const revealBtn = document.getElementById('reveal-btn');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                typingElement.innerHTML += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 120); // Slightly slower for more drama
+            } else {
+                document.querySelector('.typing-cursor').style.display = 'none';
+                subtext.classList.remove('opacity-0');
+                setTimeout(() => {
+                    revealBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                }, 1500);
+            }
+        }
+
+        window.addEventListener('load', () => setTimeout(typeWriter, 1000));
+
+
+        // --- 1. Background Particles (Sparkles/Fireflies style for dark theme) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 3 + 1; // Smaller, star-like particles
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * -0.5 - 0.1; // Gentle float up
+                // White/Gold/Red hues
+                const hue = Math.random() > 0.5 ? 0 : 360; // Red or White base
+                this.color = `hsla(${hue}, 100%, ${Math.random() * 50 + 50}%, ${Math.random() * 0.5 + 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < -10) this.y = height + 10;
+
+                // Twinkle effect
+                if (Math.random() > 0.95) {
+                    this.size = Math.random() * 3 + 1;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 70; i++) particles.push(new Particle()); // More stars
+        }
+        initParticles();
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+
+        // --- 2. Interaction Logic ---
+
+        function revealQuestion() {
+            const stepInitial = document.getElementById('step-initial');
+            const stepQuestion = document.getElementById('step-question');
+
+            stepInitial.style.transition = "opacity 0.8s ease";
+            stepInitial.style.opacity = '0';
+
+            setTimeout(() => {
+                stepInitial.classList.add('hidden');
+                stepQuestion.classList.remove('hidden');
+                stepQuestion.classList.add('fade-in');
+            }, 800);
+        }
+
+        const noBtn = document.getElementById('no-btn');
+        let isRunning = false;
+
+        function moveButton() {
+            if (isRunning) return;
+            isRunning = true;
+
+            const card = document.getElementById('main-card');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            const maxX = cardRect.width - btnRect.width - 40;
+            const maxY = cardRect.height - btnRect.height - 40;
+
+            const randomX = Math.random() * maxX - (maxX / 2);
+            const randomY = Math.random() * maxY - (maxY / 2);
+
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${Math.random() * 10 - 5}deg)`;
+
+            setTimeout(() => { isRunning = false; }, 300);
+
+            const phrases = ["Try Again", "Not allowed", "Think again", "Please?", "Recalculate"];
+            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+            noBtn.style.color = "#ef4444"; // Turn red when missed
+            setTimeout(() => noBtn.style.color = "#9ca3af", 500);
+        }
+
+        function handleYes() {
+            const stepQuestion = document.getElementById('step-question');
+            const stepSuccess = document.getElementById('step-success');
+
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(e => console.log("Audio autoplay prevented"));
+
+            triggerConfetti();
+
+            stepQuestion.style.display = 'none';
+            stepSuccess.classList.remove('hidden');
+            stepSuccess.classList.add('fade-in');
+
+            let end = Date.now() + 4000;
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#ffffff', '#ff0000', '#8b0000'] // White and Red confetti
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#ffffff', '#ff0000', '#8b0000']
+                });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#ffffff', '#ff0000', '#800000'], // Dark red theme colors
+                disableForReducedMotion: true
+            });
+        }
+    </script>
+</body>
+
+</html>
