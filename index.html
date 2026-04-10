@@ -1,412 +1,1162 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cinzel (Classic Serif), Montserrat (Clean Sans), Great Vibes (Cursive) -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap"
-        rel="stylesheet">
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>t-Closeness — Complete Numerical Question Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #2d3548;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d2a8ff;
+    --accent4: #f78166;
+    --accent5: #ffa657;
+    --yellow: #e3b341;
+    --red: #f85149;
+    --teal: #39d0d8;
+  }
 
-    <style>
-        /* Custom Fonts */
-        .font-cinzel {
-            font-family: 'Cinzel', serif;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .font-montserrat {
-            font-family: 'Montserrat', sans-serif;
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
 
-        .font-vibes {
-            font-family: 'Great Vibes', cursive;
-        }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+  }
 
-        /* Dark Glassmorphism Card Style */
-        .glass-card {
-            background: rgba(0, 0, 0, 0.4);
-            /* Darker base */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            /* Subtle white border */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
+  header {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
 
-        /* Ambient Glow Behind Card */
-        .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
-            opacity: 0.4;
-            animation: float 12s infinite ease-in-out alternate;
-        }
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
 
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
+  header p {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
 
-            100% {
-                transform: translate(30px, -30px) scale(1.1);
-            }
-        }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 1rem;
+  }
 
-        /* Smooth Transitions */
-        .fade-in {
-            animation: fadeIn 1.2s ease-out forwards;
-        }
+  .concept-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+  .concept-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent3));
+  }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  .concept-box h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
 
-        /* Button Hover Effects - Luxury Style */
-        .btn-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  .concept-box p, .concept-box li {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
 
-        .btn-hover:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
-            /* Glowing white shadow */
-        }
+  .formula {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.92rem;
+    color: var(--accent3);
+    text-align: center;
+    overflow-x: auto;
+  }
 
-        /* No Button specific transition */
-        #no-btn {
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+  .section-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 3rem 0 0.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
 
-        /* Photo Frame - Polaroid Style */
-        .photo-frame {
-            position: relative;
-            background: #fff;
-            /* White border contrasts nicely on dark bg */
-            padding: 12px;
-            padding-bottom: 40px;
-            /* Polaroid bottom space */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transform: rotate(-3deg);
-            transition: transform 0.6s ease;
-        }
+  .section-title .num {
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    color: var(--bg);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
 
-        .photo-frame:hover {
-            transform: rotate(2deg) scale(1.05);
-            /* Slight opposite tilt on hover */
-            z-index: 50;
-        }
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
 
-        .photo-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: sepia(20%);
-            /* Vintage look */
-        }
+  /* Question Card */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .q-card:hover { border-color: var(--accent); }
 
-        /* Cursor Effect for typing */
-        .typing-cursor::after {
-            content: '|';
-            color: #fff;
-            animation: blink 1s step-end infinite;
-        }
+  .q-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+  }
 
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-    </style>
+  .q-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent5);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .q-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .q-toggle {
+    font-size: 0.8rem;
+    color: var(--accent);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    padding: 4px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .q-toggle:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .q-body {
+    display: none;
+    padding: 0 1.5rem 1.5rem;
+    padding-left: calc(1.5rem + 3.5rem);
+  }
+  .q-body.open { display: block; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 0.88rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    text-align: center;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td { color: var(--text-dim); }
+
+  .sol-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .solution {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.9;
+  }
+
+  .solution strong { color: var(--text); }
+  .solution .highlight { color: var(--accent3); font-weight: 600; }
+  .solution .result { color: var(--accent2); font-weight: 700; font-size: 1rem; }
+  .solution .warn { color: var(--accent4); font-weight: 600; }
+
+  .step { margin-bottom: 0.6rem; }
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+
+  .diff-tag {
+    font-size: 0.68rem;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .easy { background: #1a3a2a; color: var(--accent2); }
+  .medium { background: #3a3020; color: var(--accent5); }
+  .hard { background: #3a1a1a; color: var(--red); }
+
+  .note-box {
+    background: #1a2332;
+    border-left: 3px solid var(--teal);
+    padding: 0.8rem 1.2rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+    color: var(--teal);
+  }
+
+  .key-concept {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--surface2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--accent3);
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; }
+    .q-body { padding-left: 1.5rem; }
+    .q-header { flex-wrap: wrap; }
+    table { font-size: 0.78rem; }
+    th, td { padding: 4px 6px; }
+  }
+</style>
 </head>
+<body>
+<div class="container">
 
-<body
-    class="bg-black min-h-screen relative overflow-hidden flex items-center justify-center font-montserrat selection:bg-red-900 selection:text-white">
+<header>
+  <div class="tag" style="background:#1a2332;color:var(--teal);">Privacy-Preserving Data Publishing</div>
+  <h1>t-Closeness</h1>
+  <p>Complete Numerical Question Bank — All possible types of computational problems with detailed step-by-step solutions</p>
+</header>
 
-    <!-- Background Gradient Layer -->
-    <div
-        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900 via-black to-black z-0">
+<!-- ─── CONCEPT REVIEW ─── -->
+<div class="concept-box">
+  <h2>Core Concepts Review</h2>
+  <p><strong>t-Closeness</strong> requires that the distribution of a sensitive attribute in any equivalence class is within distance <em>t</em> of the distribution of the attribute in the overall table. It uses the <strong>Earth Mover's Distance (EMD)</strong> to measure this.</p>
+
+  <div class="formula">
+    EMD (for categorical) = ½ × Σ |p<sub>i</sub> − q<sub>i</sub>|
+  </div>
+  <div class="formula">
+    EMD (for numerical / ordered) = (1 / (m−1)) × Σ<sub>i=1</sub><sup>m</sup> | Σ<sub>j=1</sub><sup>i</sup> (r<sub>j</sub> − s<sub>j</sub>) |
+  </div>
+
+  <p style="margin-top:1rem;">Where:</p>
+  <ul style="padding-left:1.5rem; margin-top:0.3rem;">
+    <li><strong>p<sub>i</sub>, q<sub>i</sub></strong> — fraction of value <em>i</em> in the equivalence class vs. overall table</li>
+    <li><strong>r<sub>j</sub>, s<sub>j</sub></strong> — fraction of the <em>j</em>-th ordered value in class vs. overall table</li>
+    <li><strong>m</strong> — number of distinct values of the sensitive attribute</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 1 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">1</span> EMD for Categorical Sensitive Attributes</h2>
+<p class="section-desc">Compute the Earth Mover's Distance when the sensitive attribute is categorical (unordered) such as Disease, Occupation, etc.</p>
+
+<!-- Q1 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q1</span>
+    <span class="q-text">Given the following anonymized table, compute the EMD for each equivalence class and determine if the table satisfies <strong>t-closeness</strong> with t = 0.376. <span class="diff-tag easy">Easy</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Quasi-Identifier</th><th>Sensitive (Disease)</th></tr>
+      <tr><td rowspan="3">Group A (Age 20–30)</td><td>Flu</td></tr>
+      <tr><td>Flu</td></tr>
+      <tr><td>Cancer</td></tr>
+      <tr><td rowspan="3">Group B (Age 30–40)</td><td>Cancer</td></tr>
+      <tr><td>HIV</td></tr>
+      <tr><td>HIV</td></tr>
+    </table>
+
+    <p style="margin-top:0.5rem;color:var(--text-dim);font-size:0.9rem;"><strong>Overall table:</strong> Flu = 2, Cancer = 2, HIV = 2 (total = 6)</p>
+
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall distribution:</strong> P(Flu) = 2/6 = 1/3, P(Cancer) = 2/6 = 1/3, P(HIV) = 2/6 = 1/3</div>
+
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Group A distribution:</strong> P(Flu) = 2/3, P(Cancer) = 1/3, P(HIV) = 0/3 = 0</div>
+
+      <div class="step"><span class="step-num">Step 3:</span> <strong>EMD(A) = ½ × ( |2/3 − 1/3| + |1/3 − 1/3| + |0 − 1/3| )</strong>
+        <br>= ½ × (1/3 + 0 + 1/3) = ½ × 2/3 = <span class="highlight">1/3 ≈ 0.333</span></div>
+
+      <div class="step"><span class="step-num">Step 4:</span> <strong>Group B distribution:</strong> P(Flu) = 0, P(Cancer) = 1/3, P(HIV) = 2/3</div>
+
+      <div class="step"><span class="step-num">Step 5:</span> <strong>EMD(B) = ½ × ( |0 − 1/3| + |1/3 − 1/3| + |2/3 − 1/3| )</strong>
+        <br>= ½ × (1/3 + 0 + 1/3) = <span class="highlight">1/3 ≈ 0.333</span></div>
+
+      <div class="step"><span class="step-num">Step 6:</span> max(EMD) = 0.333. Since <span class="result">0.333 ≤ 0.376</span>, the table <span class="result">satisfies t-closeness</span> with t = 0.376.</div>
     </div>
+  </div>
+</div>
 
-    <!-- Background Canvas for Particles -->
-    <canvas id="bg-canvas"
-        class="absolute top-0 left-0 w-full h-full pointer-events-none z-0 mix-blend-screen"></canvas>
-
-    <!-- Decorative Glow Orbs - Darker, moodier colors -->
-    <div class="glow-orb w-[500px] h-[500px] bg-red-800 top-[-100px] left-[-100px] mix-blend-screen"></div>
-    <div
-        class="glow-orb w-[400px] h-[400px] bg-red-900 bottom-[-50px] right-[-50px] mix-blend-screen animation-delay-2000">
+<!-- Q2 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q2</span>
+    <span class="q-text">An equivalence class has 5 records with Disease values: {Flu, Flu, Flu, Cancer, HIV}. The overall distribution in a table of 20 records is: Flu = 8, Cancer = 7, HIV = 5. Compute EMD and find the minimum value of <em>t</em>. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(Flu) = 8/20 = 0.40, P(Cancer) = 7/20 = 0.35, P(HIV) = 5/20 = 0.25</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class:</strong> P(Flu) = 3/5 = 0.60, P(Cancer) = 1/5 = 0.20, P(HIV) = 1/5 = 0.20</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>EMD = ½ × ( |0.60 − 0.40| + |0.20 − 0.35| + |0.20 − 0.25| )</strong>
+        <br>= ½ × (0.20 + 0.15 + 0.05) = ½ × 0.40 = <span class="highlight">0.20</span></div>
+      <div class="step"><span class="step-num">Result:</span> Minimum t = <span class="result">0.20</span></div>
     </div>
+  </div>
+</div>
 
-    <!-- Main Container -->
-    <main class="relative z-10 w-full max-w-lg px-4">
+<!-- Q3 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q3</span>
+    <span class="q-text">Consider a table with 4 equivalence classes. The overall distribution of Occupation is: Engineer = 0.3, Doctor = 0.3, Teacher = 0.2, Artist = 0.2. The class distributions are given below. Find the minimum t for the entire table. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Class</th><th>Engineer</th><th>Doctor</th><th>Teacher</th><th>Artist</th></tr>
+      <tr><td>C1 (4 records)</td><td>2/4</td><td>1/4</td><td>1/4</td><td>0</td></tr>
+      <tr><td>C2 (4 records)</td><td>0</td><td>2/4</td><td>1/4</td><td>1/4</td></tr>
+      <tr><td>C3 (6 records)</td><td>2/6</td><td>1/6</td><td>1/6</td><td>2/6</td></tr>
+      <tr><td>C4 (6 records)</td><td>1/6</td><td>2/6</td><td>1/6</td><td>2/6</td></tr>
+    </table>
 
-        <!-- Glass Card -->
-        <div class="glass-card rounded-xl p-8 md:p-12 text-center transition-all duration-1000 transform"
-            id="main-card">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>EMD(C1)</strong> = ½ × ( |0.50−0.30| + |0.25−0.30| + |0.25−0.20| + |0−0.20| )
+        <br>= ½ × (0.20 + 0.05 + 0.05 + 0.20) = ½ × 0.50 = <span class="highlight">0.250</span></div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>EMD(C2)</strong> = ½ × ( |0−0.30| + |0.50−0.30| + |0.25−0.20| + |0.25−0.20| )
+        <br>= ½ × (0.30 + 0.20 + 0.05 + 0.05) = ½ × 0.60 = <span class="highlight">0.300</span></div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>EMD(C3)</strong> = ½ × ( |0.333−0.30| + |0.167−0.30| + |0.167−0.20| + |0.333−0.20| )
+        <br>= ½ × (0.033 + 0.133 + 0.033 + 0.133) = ½ × 0.333 = <span class="highlight">0.167</span></div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>EMD(C4)</strong> = ½ × ( |0.167−0.30| + |0.333−0.30| + |0.167−0.20| + |0.333−0.20| )
+        <br>= ½ × (0.133 + 0.033 + 0.033 + 0.133) = ½ × 0.333 = <span class="highlight">0.167</span></div>
+      <div class="step"><span class="step-num">Result:</span> max(0.250, 0.300, 0.167, 0.167) = <span class="result">0.300</span>. Minimum t = <span class="result">0.300</span></div>
+    </div>
+  </div>
+</div>
 
-            <!-- Step 1: Initial State -->
-            <div id="step-initial" class="flex flex-col items-center space-y-6">
-                <!-- Editable Name -->
-                <h1
-                    class="font-cinzel text-5xl md:text-6xl font-bold text-white tracking-wide min-h-[80px] drop-shadow-lg">
-                    <span id="typing-text"></span><span class="typing-cursor"></span>
-                </h1>
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 2 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">2</span> EMD for Numerical (Ordered) Sensitive Attributes</h2>
+<p class="section-desc">Compute EMD using the ordered / numerical distance formula involving cumulative differences. Used when the sensitive attribute is Salary, Age, etc.</p>
 
-                <p class="text-gray-300 text-lg md:text-xl font-light tracking-wide opacity-0 transition-opacity duration-1000 delay-1000"
-                    id="subtext">
-                    I have a question for you...
-                </p>
+<!-- Q4 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q4</span>
+    <span class="q-text">A table has Salary as the sensitive attribute with ordered values {10K, 20K, 30K, 40K}. Overall distribution: each value appears 3 times (total 12). An equivalence class has 4 records: {10K, 10K, 30K, 40K}. Compute the numerical EMD. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall distribution (s):</strong> s(10K) = 3/12 = 1/4, s(20K) = 1/4, s(30K) = 1/4, s(40K) = 1/4</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class distribution (r):</strong> r(10K) = 2/4 = 1/2, r(20K) = 0, r(30K) = 1/4, r(40K) = 1/4</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>Differences (r − s):</strong>
+        <br>d₁ = 1/2 − 1/4 = 1/4
+        <br>d₂ = 0 − 1/4 = −1/4
+        <br>d₃ = 1/4 − 1/4 = 0
+        <br>d₄ = 1/4 − 1/4 = 0</div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>Cumulative sums:</strong>
+        <br>C₁ = 1/4
+        <br>C₂ = 1/4 + (−1/4) = 0
+        <br>C₃ = 0 + 0 = 0
+        <br>C₄ = 0 + 0 = 0</div>
+      <div class="step"><span class="step-num">Step 5:</span> <strong>Absolute cumulative sums:</strong> |1/4|, |0|, |0|, |0| → Sum = 1/4</div>
+      <div class="step"><span class="step-num">Step 6:</span> <strong>EMD = 1/(m−1) × Sum = 1/(4−1) × 1/4 = 1/12</strong> = <span class="result">0.0833</span></div>
+    </div>
+  </div>
+</div>
 
-                <button id="reveal-btn" onclick="revealQuestion()"
-                    class="btn-hover mt-8 px-10 py-3 bg-white text-black font-cinzel font-bold tracking-widest uppercase text-sm rounded shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:bg-gray-100 transition-all opacity-0 pointer-events-none transform translate-y-4">
-                    Open Letter
-                </button>
-            </div>
+<!-- Q5 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q5</span>
+    <span class="q-text">Overall salary distribution: {3K: 3, 5K: 2, 7K: 4, 9K: 1} (total = 10). Equivalence class: {3K, 5K, 7K, 9K} (4 records). Compute the numerical EMD. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall (s):</strong> s(3K)=3/10, s(5K)=2/10, s(7K)=4/10, s(9K)=1/10</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class (r):</strong> r(3K)=1/4, r(5K)=1/4, r(7K)=1/4, r(9K)=1/4</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>Differences (r − s):</strong>
+        <br>d₁ = 1/4 − 3/10 = 5/20 − 6/20 = −1/20
+        <br>d₂ = 1/4 − 2/10 = 5/20 − 4/20 = 1/20
+        <br>d₃ = 1/4 − 4/10 = 5/20 − 8/20 = −3/20
+        <br>d₄ = 1/4 − 1/10 = 5/20 − 2/20 = 3/20</div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>Cumulative sums:</strong>
+        <br>C₁ = −1/20
+        <br>C₂ = −1/20 + 1/20 = 0
+        <br>C₃ = 0 + (−3/20) = −3/20
+        <br>C₄ = −3/20 + 3/20 = 0</div>
+      <div class="step"><span class="step-num">Step 5:</span> Sum of |C| = 1/20 + 0 + 3/20 + 0 = 4/20 = 1/5</div>
+      <div class="step"><span class="step-num">Step 6:</span> EMD = 1/(4−1) × 1/5 = 1/15 = <span class="result">0.0667</span></div>
+    </div>
+  </div>
+</div>
 
-            <!-- Step 2: The Question (Initially Hidden) -->
-            <div id="step-question"
-                class="hidden flex-col items-center space-y-10 relative min-h-[350px] justify-center">
-                <!-- Heart Icon with Glow -->
-                <div
-                    class="text-red-500 text-7xl animate-pulse drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] filter brightness-125">
-                    ❤️</div>
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 3 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">3</span> Verify t-Closeness Satisfaction</h2>
+<p class="section-desc">Given a table and a threshold t, determine whether the table satisfies t-closeness or not.</p>
 
-                <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-white leading-relaxed drop-shadow-md">
-                    Will you be my Valentine?
-                </h2>
+<!-- Q6 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q6</span>
+    <span class="q-text">A hospital dataset has 12 records with Disease: {Flu:4, Diabetes:4, Cancer:4}. After generalization, two equivalence classes formed. Does the table satisfy <strong>0.2-closeness</strong>? <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Class</th><th>Flu</th><th>Diabetes</th><th>Cancer</th></tr>
+      <tr><td>E1 (6 records)</td><td>3</td><td>2</td><td>1</td></tr>
+      <tr><td>E2 (6 records)</td><td>1</td><td>2</td><td>3</td></tr>
+    </table>
 
-                <div class="flex flex-wrap justify-center gap-6 w-full relative z-20">
-                    <!-- YES Button -->
-                    <button onclick="handleYes()"
-                        class="btn-hover px-12 py-4 bg-red-700 text-white font-cinzel font-bold text-lg rounded shadow-lg hover:bg-red-600 transition-colors z-20">
-                        YES
-                    </button>
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(Flu) = 4/12 = 1/3, P(Diabetes) = 4/12 = 1/3, P(Cancer) = 4/12 = 1/3</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>E1:</strong> P(Flu)=3/6=1/2, P(Diabetes)=2/6=1/3, P(Cancer)=1/6</div>
+      <div class="step"><span class="step-num">Step 3:</span> EMD(E1) = ½ × (|1/2−1/3| + |1/3−1/3| + |1/6−1/3|)
+        <br>= ½ × (1/6 + 0 + 1/6) = ½ × 1/3 = <span class="highlight">1/6 ≈ 0.167</span></div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>E2:</strong> P(Flu)=1/6, P(Diabetes)=1/3, P(Cancer)=1/2</div>
+      <div class="step"><span class="step-num">Step 5:</span> EMD(E2) = ½ × (|1/6−1/3| + |1/3−1/3| + |1/2−1/3|)
+        <br>= ½ × (1/6 + 0 + 1/6) = <span class="highlight">1/6 ≈ 0.167</span></div>
+      <div class="step"><span class="step-num">Result:</span> max(EMD) = 0.167. Since <span class="result">0.167 ≤ 0.20</span>, the table <span class="result">satisfies 0.2-closeness ✓</span></div>
+    </div>
+  </div>
+</div>
 
-                    <!-- NO Button (The Runner) -->
-                    <button id="no-btn" onmouseover="moveButton()" ontouchstart="moveButton()"
-                        class="px-12 py-4 border border-gray-500 text-gray-400 font-cinzel font-bold text-lg rounded bg-transparent hover:bg-white/5 transition-colors z-10">
-                        NO
-                    </button>
-                </div>
-            </div>
+<!-- Q7 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q7</span>
+    <span class="q-text">Overall: {Heart Disease: 5, Flu: 3, HIV: 2} out of 10 records. Class X has 3 records: {Heart Disease, Heart Disease, Heart Disease}. Does class X satisfy <strong>0.3-closeness</strong>? <span class="diff-tag easy">Easy</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(HD)=0.50, P(Flu)=0.30, P(HIV)=0.20</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class X:</strong> P(HD)=1.0, P(Flu)=0, P(HIV)=0</div>
+      <div class="step"><span class="step-num">Step 3:</span> EMD = ½ × (|1.0−0.50| + |0−0.30| + |0−0.20|)
+        <br>= ½ × (0.50 + 0.30 + 0.20) = ½ × 1.00 = <span class="highlight">0.50</span></div>
+      <div class="step"><span class="step-num">Result:</span> 0.50 > 0.30. <span class="warn">Class X VIOLATES 0.3-closeness ✗</span></div>
+    </div>
+  </div>
+</div>
 
-            <!-- Step 3: Success Celebration (Initially Hidden) -->
-            <div id="step-success" class="hidden flex-col items-center space-y-6 fade-in">
-                <h2 class="font-vibes text-6xl text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-                    She said Yes!
-                </h2>
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 4 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">4</span> Compare k-Anonymity, l-Diversity, and t-Closeness</h2>
+<p class="section-desc">Given a table, check all three privacy properties numerically and identify which ones hold.</p>
 
-                <p class="text-gray-300 text-lg font-light tracking-wider uppercase font-cinzel text-sm">
-                    Let the romance begin...
-                </p>
+<!-- Q8 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q8</span>
+    <span class="q-text">Verify k-anonymity, l-diversity, and t-closeness (t = 0.15) for the following table. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Zipcode</th><th>Age</th><th>Disease</th></tr>
+      <tr><td>130**</td><td>≤40</td><td>Flu</td></tr>
+      <tr><td>130**</td><td>≤40</td><td>Flu</td></tr>
+      <tr><td>130**</td><td>≤40</td><td>Cancer</td></tr>
+      <tr><td>130**</td><td>≤40</td><td>HIV</td></tr>
+      <tr><td>148**</td><td>>40</td><td>Cancer</td></tr>
+      <tr><td>148**</td><td>>40</td><td>HIV</td></tr>
+      <tr><td>148**</td><td>>40</td><td>HIV</td></tr>
+      <tr><td>148**</td><td>>40</td><td>Flu</td></tr>
+    </table>
 
-                <!-- Photo Frame with Romantic Image -->
-                <div
-                    class="photo-frame mt-6 rotate-2 transform hover:rotate-0 transition duration-500 ease-in-out cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80"
-                        alt="Couple holding hands"
-                        class="photo-img grayscale hover:grayscale-0 transition duration-500">
-                    <div class="absolute bottom-3 left-0 w-full text-center font-vibes text-2xl text-gray-800">Us
-                        soon...</div>
-                </div>
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">k-Anonymity:</span> E1 has 4 records, E2 has 4 records. Min size = 4. <span class="result">✓ 4-anonymous</span></div>
 
-                <div class="pt-8 text-[10px] text-gray-500 font-montserrat tracking-[0.3em] uppercase opacity-60">
-                    February 14, 2025
-                </div>
-            </div>
+      <div class="step"><span class="step-num">l-Diversity:</span> E1 has {Flu, Flu, Cancer, HIV} → 3 distinct values. E2 has {Cancer, HIV, HIV, Flu} → 3 distinct. Min = 3. <span class="result">✓ 3-diverse</span></div>
 
-        </div>
-    </main>
+      <div class="step"><span class="step-num">t-Closeness:</span>
+        <br><strong>Overall:</strong> P(Flu)=3/8, P(Cancer)=2/8=1/4, P(HIV)=3/8
+        <br><strong>E1:</strong> P(Flu)=2/4=1/2, P(Cancer)=1/4, P(HIV)=1/4
+        <br>EMD(E1) = ½ × (|1/2−3/8| + |1/4−1/4| + |1/4−3/8|)
+        <br>= ½ × (1/8 + 0 + 1/8) = ½ × 1/4 = <span class="highlight">1/8 = 0.125</span>
+        <br><strong>E2:</strong> P(Flu)=1/4, P(Cancer)=1/4, P(HIV)=2/4=1/2
+        <br>EMD(E2) = ½ × (|1/4−3/8| + |1/4−1/4| + |1/2−3/8|)
+        <br>= ½ × (1/8 + 0 + 1/8) = <span class="highlight">1/8 = 0.125</span>
+        <br>max(EMD) = 0.125. Since 0.125 ≤ 0.15, <span class="result">✓ Satisfies 0.15-closeness</span></div>
+    </div>
+  </div>
+</div>
 
-    <!-- Audio Element -->
-    <audio id="bg-music" loop>
-        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
-    </audio>
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 5 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">5</span> Find Maximum t Needed (Worst-Case EMD)</h2>
+<p class="section-desc">Determine the smallest t such that the table satisfies t-closeness (i.e., find the maximum EMD across all equivalence classes).</p>
 
-    <script>
-        // --- 0. Typing Effect ---
-        const textToType = "Hey Beautiful...";
-        const typingElement = document.getElementById('typing-text');
-        const subtext = document.getElementById('subtext');
-        const revealBtn = document.getElementById('reveal-btn');
-        let charIndex = 0;
+<!-- Q9 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q9</span>
+    <span class="q-text">A table of 15 records has Salary (sensitive) distributed as: {Low:5, Medium:5, High:5}. Three equivalence classes are formed. Find the minimum t for t-closeness. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Class</th><th>Low</th><th>Medium</th><th>High</th></tr>
+      <tr><td>G1 (5 rec)</td><td>3</td><td>1</td><td>1</td></tr>
+      <tr><td>G2 (5 rec)</td><td>1</td><td>3</td><td>1</td></tr>
+      <tr><td>G3 (5 rec)</td><td>1</td><td>1</td><td>3</td></tr>
+    </table>
 
-        function typeWriter() {
-            if (charIndex < textToType.length) {
-                typingElement.innerHTML += textToType.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 120); // Slightly slower for more drama
-            } else {
-                document.querySelector('.typing-cursor').style.display = 'none';
-                subtext.classList.remove('opacity-0');
-                setTimeout(() => {
-                    revealBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
-                }, 1500);
-            }
-        }
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(L) = P(M) = P(H) = 5/15 = 1/3</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>G1:</strong> P(L)=3/5, P(M)=1/5, P(H)=1/5
+        <br>EMD(G1) = ½ × (|3/5−1/3| + |1/5−1/3| + |1/5−1/3|)
+        <br>= ½ × (4/15 + 2/15 + 2/15) = ½ × 8/15 = <span class="highlight">4/15 ≈ 0.267</span></div>
+      <div class="step"><span class="step-num">Step 3:</span> By symmetry, EMD(G2) = EMD(G3) = <span class="highlight">4/15 ≈ 0.267</span></div>
+      <div class="step"><span class="step-num">Result:</span> Minimum t = max(4/15, 4/15, 4/15) = <span class="result">4/15 ≈ 0.267</span></div>
+    </div>
+  </div>
+</div>
 
-        window.addEventListener('load', () => setTimeout(typeWriter, 1000));
+<!-- Q10 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q10</span>
+    <span class="q-text">Given an equivalence class with records {HIV, HIV, HIV, Flu} from a table where overall: Flu = 6, HIV = 3, Cancer = 3 (12 total). What is the EMD? What is the minimum t value? <span class="diff-tag easy">Easy</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(Flu)=6/12=0.50, P(HIV)=3/12=0.25, P(Cancer)=3/12=0.25</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class:</strong> P(Flu)=1/4=0.25, P(HIV)=3/4=0.75, P(Cancer)=0</div>
+      <div class="step"><span class="step-num">Step 3:</span> EMD = ½ × (|0.25−0.50| + |0.75−0.25| + |0−0.25|)
+        <br>= ½ × (0.25 + 0.50 + 0.25) = ½ × 1.00 = <span class="result">0.50</span></div>
+      <div class="note-box">This is a high EMD — the class distribution is very skewed compared to the overall. Minimum t for this class alone is 0.50.</div>
+    </div>
+  </div>
+</div>
 
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 6 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">6</span> t-Closeness with Generalization Hierarchies</h2>
+<p class="section-desc">Given a generalization scheme, apply it and then check t-closeness on the resulting equivalence classes.</p>
 
-        // --- 1. Background Particles (Sparkles/Fireflies style for dark theme) ---
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+<!-- Q11 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q11</span>
+    <span class="q-text">Given the raw data below, generalize Age to intervals [20-35] and [36-50]. Then compute EMD for each class and check 0.25-closeness. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Name</th><th>Age</th><th>Disease</th></tr>
+      <tr><td>A</td><td>22</td><td>Flu</td></tr>
+      <tr><td>B</td><td>28</td><td>Flu</td></tr>
+      <tr><td>C</td><td>33</td><td>Cancer</td></tr>
+      <tr><td>D</td><td>25</td><td>HIV</td></tr>
+      <tr><td>E</td><td>38</td><td>Cancer</td></tr>
+      <tr><td>F</td><td>42</td><td>HIV</td></tr>
+      <tr><td>G</td><td>45</td><td>Flu</td></tr>
+      <tr><td>H</td><td>50</td><td>Cancer</td></tr>
+    </table>
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>After generalization:</strong>
+        <br><strong>E1 [20-35]:</strong> A(Flu), B(Flu), C(Cancer), D(HIV) → 4 records
+        <br><strong>E2 [36-50]:</strong> E(Cancer), F(HIV), G(Flu), H(Cancer) → 4 records</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Overall:</strong> Flu=3/8, Cancer=3/8, HIV=2/8=1/4</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>E1:</strong> Flu=2/4=1/2, Cancer=1/4, HIV=1/4
+        <br>EMD(E1) = ½ × (|1/2−3/8| + |1/4−3/8| + |1/4−1/4|)
+        <br>= ½ × (1/8 + 1/8 + 0) = ½ × 1/4 = <span class="highlight">1/8 = 0.125</span></div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>E2:</strong> Flu=1/4, Cancer=2/4=1/2, HIV=1/4
+        <br>EMD(E2) = ½ × (|1/4−3/8| + |1/2−3/8| + |1/4−1/4|)
+        <br>= ½ × (1/8 + 1/8 + 0) = <span class="highlight">1/8 = 0.125</span></div>
+      <div class="step"><span class="step-num">Result:</span> max(EMD) = 0.125. Since <span class="result">0.125 ≤ 0.25</span>, the table <span class="result">satisfies 0.25-closeness ✓</span></div>
+    </div>
+  </div>
+</div>
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 3 + 1; // Smaller, star-like particles
-                this.speedX = Math.random() * 0.2 - 0.1;
-                this.speedY = Math.random() * -0.5 - 0.1; // Gentle float up
-                // White/Gold/Red hues
-                const hue = Math.random() > 0.5 ? 0 : 360; // Red or White base
-                this.color = `hsla(${hue}, 100%, ${Math.random() * 50 + 50}%, ${Math.random() * 0.5 + 0.2})`;
-            }
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 7 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">7</span> Identify Violating Equivalence Classes</h2>
+<p class="section-desc">Given a table and threshold t, identify exactly which classes violate t-closeness and need further generalization.</p>
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.y < -10) this.y = height + 10;
+<!-- Q12 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q12</span>
+    <span class="q-text">Overall distribution: {A: 0.4, B: 0.3, C: 0.3}. Four equivalence classes exist. Which classes violate <strong>t = 0.20</strong>? <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Class</th><th>A</th><th>B</th><th>C</th></tr>
+      <tr><td>E1 (5)</td><td>3/5</td><td>1/5</td><td>1/5</td></tr>
+      <tr><td>E2 (5)</td><td>2/5</td><td>2/5</td><td>1/5</td></tr>
+      <tr><td>E3 (5)</td><td>1/5</td><td>1/5</td><td>3/5</td></tr>
+      <tr><td>E4 (5)</td><td>2/5</td><td>1/5</td><td>2/5</td></tr>
+    </table>
 
-                // Twinkle effect
-                if (Math.random() > 0.95) {
-                    this.size = Math.random() * 3 + 1;
-                }
-            }
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">E1:</span> EMD = ½ × (|0.60−0.40| + |0.20−0.30| + |0.20−0.30|) = ½ × (0.20+0.10+0.10) = <span class="highlight">0.20</span></div>
+      <div class="step"><span class="step-num">E2:</span> EMD = ½ × (|0.40−0.40| + |0.40−0.30| + |0.20−0.30|) = ½ × (0+0.10+0.10) = <span class="highlight">0.10</span></div>
+      <div class="step"><span class="step-num">E3:</span> EMD = ½ × (|0.20−0.40| + |0.20−0.30| + |0.60−0.30|) = ½ × (0.20+0.10+0.30) = <span class="highlight">0.30</span></div>
+      <div class="step"><span class="step-num">E4:</span> EMD = ½ × (|0.40−0.40| + |0.20−0.30| + |0.40−0.30|) = ½ × (0+0.10+0.10) = <span class="highlight">0.10</span></div>
+      <div class="step"><span class="step-num">Result:</span> E1 has EMD = 0.20 (borderline, ≤ t ✓). <span class="warn">E3 has EMD = 0.30 > 0.20 — VIOLATES t-closeness ✗</span>. E2 and E4 pass.</div>
+    </div>
+  </div>
+</div>
 
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 8 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">8</span> EMD with Binary Sensitive Attributes</h2>
+<p class="section-desc">Special case where the sensitive attribute has only two values (e.g., Yes/No, Positive/Negative).</p>
 
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 70; i++) particles.push(new Particle()); // More stars
-        }
-        initParticles();
+<!-- Q13 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q13</span>
+    <span class="q-text">A medical study has 100 records where "Test Result" is the sensitive attribute: Positive = 30, Negative = 70. An equivalence class of 10 records has 6 Positive and 4 Negative. Compute the EMD. <span class="diff-tag easy">Easy</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall:</strong> P(+) = 30/100 = 0.30, P(−) = 70/100 = 0.70</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class:</strong> P(+) = 6/10 = 0.60, P(−) = 4/10 = 0.40</div>
+      <div class="step"><span class="step-num">Step 3:</span> EMD = ½ × (|0.60 − 0.30| + |0.40 − 0.70|) = ½ × (0.30 + 0.30) = <span class="result">0.30</span></div>
+      <div class="note-box">For binary attributes, EMD always simplifies to: EMD = |p₁ − q₁| (the absolute difference for one value) since both differences are always equal.</div>
+    </div>
+  </div>
+</div>
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 9 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">9</span> Theoretical Maximum EMD</h2>
+<p class="section-desc">Compute the worst-case EMD — what is the maximum possible EMD for a given overall distribution?</p>
 
+<!-- Q14 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q14</span>
+    <span class="q-text">If the overall distribution of a sensitive attribute with 4 values is {0.25, 0.25, 0.25, 0.25}, what is the maximum possible EMD for any equivalence class? <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> The worst case is when the class has all records with a single value. E.g., class distribution = {1, 0, 0, 0}.</div>
+      <div class="step"><span class="step-num">Step 2:</span> EMD = ½ × (|1−0.25| + |0−0.25| + |0−0.25| + |0−0.25|)
+        <br>= ½ × (0.75 + 0.25 + 0.25 + 0.25) = ½ × 1.50 = <span class="result">0.75</span></div>
+      <div class="note-box">For a uniform distribution over m values, the maximum categorical EMD = (m−1)/m. Here: (4−1)/4 = 3/4 = 0.75.</div>
+    </div>
+  </div>
+</div>
 
-        // --- 2. Interaction Logic ---
+<!-- Q15 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q15</span>
+    <span class="q-text">Overall distribution: {Disease1: 0.6, Disease2: 0.4}. What is the maximum EMD that any equivalence class can have? <span class="diff-tag easy">Easy</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Case 1:</span> Class = all Disease1 → {1.0, 0.0}
+        <br>EMD = ½ × (|1.0−0.6| + |0−0.4|) = ½ × (0.4+0.4) = <span class="highlight">0.40</span></div>
+      <div class="step"><span class="step-num">Case 2:</span> Class = all Disease2 → {0, 1.0}
+        <br>EMD = ½ × (|0−0.6| + |1.0−0.4|) = ½ × (0.6+0.6) = <span class="highlight">0.60</span></div>
+      <div class="step"><span class="step-num">Result:</span> Maximum EMD = <span class="result">0.60</span></div>
+    </div>
+  </div>
+</div>
 
-        function revealQuestion() {
-            const stepInitial = document.getElementById('step-initial');
-            const stepQuestion = document.getElementById('step-question');
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 10 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">10</span> t-Closeness on Full Table (End-to-End)</h2>
+<p class="section-desc">Given a raw microdata table, perform the complete process: form equivalence classes, compute EMD for each, and determine the t-closeness guarantee.</p>
 
-            stepInitial.style.transition = "opacity 0.8s ease";
-            stepInitial.style.opacity = '0';
+<!-- Q16 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q16</span>
+    <span class="q-text">Given the following raw data, generalize Zipcode to 3-digit prefixes, suppress Name, and determine the t value for the resulting table. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <table>
+      <tr><th>Name</th><th>Zipcode</th><th>Age</th><th>Salary</th><th>Disease</th></tr>
+      <tr><td>Alice</td><td>47677</td><td>29</td><td>30K</td><td>Flu</td></tr>
+      <tr><td>Bob</td><td>47602</td><td>22</td><td>50K</td><td>Cancer</td></tr>
+      <tr><td>Carol</td><td>47678</td><td>27</td><td>40K</td><td>Flu</td></tr>
+      <tr><td>Dave</td><td>47905</td><td>52</td><td>60K</td><td>HIV</td></tr>
+      <tr><td>Eve</td><td>47909</td><td>47</td><td>70K</td><td>Cancer</td></tr>
+      <tr><td>Frank</td><td>47906</td><td>55</td><td>50K</td><td>Cancer</td></tr>
+      <tr><td>Grace</td><td>48100</td><td>35</td><td>45K</td><td>HIV</td></tr>
+      <tr><td>Hank</td><td>48105</td><td>33</td><td>55K</td><td>Flu</td></tr>
+      <tr><td>Ivy</td><td>48112</td><td>38</td><td>40K</td><td>HIV</td></tr>
+    </table>
 
-            setTimeout(() => {
-                stepInitial.classList.add('hidden');
-                stepQuestion.classList.remove('hidden');
-                stepQuestion.classList.add('fade-in');
-            }, 800);
-        }
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Generalize Zipcode → 3-digit prefix:</strong>
+        <br><strong>E1 (476**):</strong> Alice, Bob, Carol → Disease: {Flu, Cancer, Flu}
+        <br><strong>E2 (479**):</strong> Dave, Eve, Frank → Disease: {HIV, Cancer, Cancer}
+        <br><strong>E3 (481**):</strong> Grace, Hank, Ivy → Disease: {HIV, Flu, HIV}</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Overall distribution (9 records):</strong>
+        <br>Flu = 3/9 = 1/3, Cancer = 3/9 = 1/3, HIV = 3/9 = 1/3</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>E1:</strong> Flu=2/3, Cancer=1/3, HIV=0
+        <br>EMD(E1) = ½ × (|2/3−1/3| + |1/3−1/3| + |0−1/3|) = ½ × (1/3+0+1/3) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>E2:</strong> Flu=0, Cancer=2/3, HIV=1/3
+        <br>EMD(E2) = ½ × (|0−1/3| + |2/3−1/3| + |1/3−1/3|) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">Step 5:</span> <strong>E3:</strong> Flu=1/3, Cancer=0, HIV=2/3
+        <br>EMD(E3) = ½ × (|1/3−1/3| + |0−1/3| + |2/3−1/3|) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">Result:</span> The table achieves <span class="result">t = 1/3 ≈ 0.333</span>-closeness (all classes have equal EMD by symmetry).</div>
+    </div>
+  </div>
+</div>
 
-        const noBtn = document.getElementById('no-btn');
-        let isRunning = false;
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 11 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">11</span> Effect of Adding/Removing Records</h2>
+<p class="section-desc">Determine how adding or removing a record from an equivalence class changes the EMD.</p>
 
-        function moveButton() {
-            if (isRunning) return;
-            isRunning = true;
+<!-- Q17 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q17</span>
+    <span class="q-text">An equivalence class has {Flu, Cancer, HIV} (3 records). Overall: P(Flu)=P(Cancer)=P(HIV)=1/3. If we add one more "Flu" record to this class, how does the EMD change? (Assume overall distribution stays the same.) <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Before:</span> Class = {Flu, Cancer, HIV} → P(Flu)=1/3, P(Cancer)=1/3, P(HIV)=1/3
+        <br>EMD = ½ × (|1/3−1/3| + |1/3−1/3| + |1/3−1/3|) = <span class="highlight">0</span></div>
+      <div class="step"><span class="step-num">After:</span> Class = {Flu, Flu, Cancer, HIV} → P(Flu)=2/4=1/2, P(Cancer)=1/4, P(HIV)=1/4
+        <br>EMD = ½ × (|1/2−1/3| + |1/4−1/3| + |1/4−1/3|)
+        <br>= ½ × (1/6 + 1/12 + 1/12) = ½ × (2/12 + 1/12 + 1/12) = ½ × 4/12 = <span class="highlight">1/6 ≈ 0.167</span></div>
+      <div class="step"><span class="step-num">Result:</span> EMD increased from <span class="result">0 → 0.167</span>. Adding a duplicate sensitive value significantly increases distance.</div>
+    </div>
+  </div>
+</div>
 
-            const card = document.getElementById('main-card');
-            const cardRect = card.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 12 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">12</span> t-Closeness vs. l-Diversity Failure</h2>
+<p class="section-desc">Show scenarios where a table satisfies l-diversity but fails t-closeness (or vice versa).</p>
 
-            const maxX = cardRect.width - btnRect.width - 40;
-            const maxY = cardRect.height - btnRect.height - 40;
+<!-- Q18 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q18</span>
+    <span class="q-text">A table has Overall: {Flu:1, Cancer:1, HIV:8} (10 records). An equivalence class has: {Flu, Cancer, HIV}. Show that it satisfies 3-diversity but compute the EMD. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">l-Diversity:</span> The class has 3 distinct values → <span class="result">✓ Satisfies 3-diversity</span></div>
+      <div class="step"><span class="step-num">t-Closeness:</span>
+        <br>Overall: P(Flu)=0.10, P(Cancer)=0.10, P(HIV)=0.80
+        <br>Class: P(Flu)=1/3≈0.333, P(Cancer)=1/3≈0.333, P(HIV)=1/3≈0.333
+        <br>EMD = ½ × (|0.333−0.10| + |0.333−0.10| + |0.333−0.80|)
+        <br>= ½ × (0.233 + 0.233 + 0.467) = ½ × 0.933 = <span class="highlight">0.467</span></div>
+      <div class="step"><span class="step-num">Result:</span> The class is 3-diverse but has <span class="warn">EMD = 0.467</span>, which is very high. It would <span class="warn">fail t-closeness for any t &lt; 0.467</span>.</div>
+      <div class="note-box">Key insight: l-diversity only counts distinct values. t-closeness checks how the distribution matches the overall table. A class can be l-diverse but completely skewed relative to the global distribution.</div>
+    </div>
+  </div>
+</div>
 
-            const randomX = Math.random() * maxX - (maxX / 2);
-            const randomY = Math.random() * maxY - (maxY / 2);
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 13 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">13</span> Entropy l-Diversity + t-Closeness Combined</h2>
+<p class="section-desc">Compute both entropy l-diversity and t-closeness for the same table to compare privacy guarantees.</p>
 
-            noBtn.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${Math.random() * 10 - 5}deg)`;
+<!-- Q19 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q19</span>
+    <span class="q-text">An equivalence class has: {Flu:3, Cancer:1, HIV:1} (5 records). Overall: {Flu:6, Cancer:7, HIV:7} (20 records). Compute both the entropy and the EMD. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Entropy l-Diversity:</span>
+        <br>Class distribution: P(Flu)=3/5, P(Cancer)=1/5, P(HIV)=1/5
+        <br>Entropy = −(3/5)log₂(3/5) − (1/5)log₂(1/5) − (1/5)log₂(1/5)
+        <br>= −(0.6)(−0.737) − (0.2)(−2.322) − (0.2)(−2.322)
+        <br>= 0.442 + 0.464 + 0.464 = <span class="highlight">1.371 bits</span>
+        <br>Since 2^1.371 ≈ 2.59, this class satisfies entropy 2-diversity (l ≤ 2^1.371).</div>
 
-            setTimeout(() => { isRunning = false; }, 300);
+      <div class="step"><span class="step-num">t-Closeness:</span>
+        <br>Overall: P(Flu)=6/20=0.30, P(Cancer)=7/20=0.35, P(HIV)=7/20=0.35
+        <br>EMD = ½ × (|0.60−0.30| + |0.20−0.35| + |0.20−0.35|)
+        <br>= ½ × (0.30 + 0.15 + 0.15) = ½ × 0.60 = <span class="result">0.30</span></div>
+    </div>
+  </div>
+</div>
 
-            const phrases = ["Try Again", "Not allowed", "Think again", "Please?", "Recalculate"];
-            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-            noBtn.style.color = "#ef4444"; // Turn red when missed
-            setTimeout(() => noBtn.style.color = "#9ca3af", 500);
-        }
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 14 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">14</span> Computing Information Gain with t-Closeness</h2>
+<p class="section-desc">Compute the information gain (KL divergence or similar) an attacker gets, and relate it to the EMD threshold.</p>
 
-        function handleYes() {
-            const stepQuestion = document.getElementById('step-question');
-            const stepSuccess = document.getElementById('step-success');
+<!-- Q20 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q20</span>
+    <span class="q-text">Overall: P(Flu)=0.5, P(HIV)=0.5. A class has: P(Flu)=0.8, P(HIV)=0.2. Compute the EMD and the KL-divergence to quantify the attacker's information gain. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">EMD:</span>
+        <br>EMD = ½ × (|0.8−0.5| + |0.2−0.5|) = ½ × (0.3+0.3) = <span class="highlight">0.30</span></div>
+      <div class="step"><span class="step-num">KL-Divergence:</span> D_KL(Class ‖ Overall) = Σ p(x) × log₂(p(x)/q(x))
+        <br>= 0.8 × log₂(0.8/0.5) + 0.2 × log₂(0.2/0.5)
+        <br>= 0.8 × log₂(1.6) + 0.2 × log₂(0.4)
+        <br>= 0.8 × 0.678 + 0.2 × (−1.322)
+        <br>= 0.543 − 0.264 = <span class="highlight">0.278 bits</span></div>
+      <div class="step"><span class="step-num">Interpretation:</span> By knowing someone is in this class, an attacker gains <span class="result">0.278 bits</span> of information about their disease. The EMD of 0.30 gives a bound on this gain.</div>
+    </div>
+  </div>
+</div>
 
-            const audio = document.getElementById('bg-music');
-            audio.play().catch(e => console.log("Audio autoplay prevented"));
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 15 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">15</span> Multi-Attribute Sensitive t-Closeness</h2>
+<p class="section-desc">When there are two sensitive attributes, compute t-closeness for each independently.</p>
 
-            triggerConfetti();
+<!-- Q21 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q21</span>
+    <span class="q-text">A table has two sensitive attributes: Disease and Income Level. An equivalence class has 4 records. Compute the EMD for each sensitive attribute separately. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <p style="font-size:0.9rem;color:var(--text-dim);">
+      <strong>Overall (12 records):</strong> Disease: {Flu:4, Cancer:4, HIV:4}; Income: {Low:3, Medium:6, High:3}<br>
+      <strong>Class (4 records):</strong> Disease: {Flu, Flu, Cancer, HIV}; Income: {Low, Low, Medium, High}
+    </p>
 
-            stepQuestion.style.display = 'none';
-            stepSuccess.classList.remove('hidden');
-            stepSuccess.classList.add('fade-in');
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Disease EMD:</span>
+        <br>Overall: P(Flu)=1/3, P(Cancer)=1/3, P(HIV)=1/3
+        <br>Class: P(Flu)=2/4=1/2, P(Cancer)=1/4, P(HIV)=1/4
+        <br>EMD = ½ × (|1/2−1/3| + |1/4−1/3| + |1/4−1/3|)
+        <br>= ½ × (1/6 + 1/12 + 1/12) = ½ × 4/12 = <span class="highlight">1/6 ≈ 0.167</span></div>
 
-            let end = Date.now() + 4000;
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 60,
-                    origin: { x: 0 },
-                    colors: ['#ffffff', '#ff0000', '#8b0000'] // White and Red confetti
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 60,
-                    origin: { x: 1 },
-                    colors: ['#ffffff', '#ff0000', '#8b0000']
-                });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        }
+      <div class="step"><span class="step-num">Income EMD:</span>
+        <br>Overall: P(Low)=3/12=1/4, P(Med)=6/12=1/2, P(High)=3/12=1/4
+        <br>Class: P(Low)=2/4=1/2, P(Med)=1/4, P(High)=1/4
+        <br>EMD = ½ × (|1/2−1/4| + |1/4−1/2| + |1/4−1/4|)
+        <br>= ½ × (1/4 + 1/4 + 0) = <span class="highlight">1/4 = 0.25</span></div>
 
-        function triggerConfetti() {
-            confetti({
-                particleCount: 150,
-                spread: 120,
-                origin: { y: 0.6 },
-                colors: ['#ffffff', '#ff0000', '#800000'], // Dark red theme colors
-                disableForReducedMotion: true
-            });
-        }
-    </script>
+      <div class="step"><span class="step-num">Result:</span> For this class, Disease EMD = 0.167, Income EMD = 0.25. For the table to satisfy t-closeness on both attributes, we need <span class="result">t ≥ 0.25</span>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 16 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">16</span> Numerical EMD with Unequal Value Counts</h2>
+<p class="section-desc">Compute ordered EMD when the overall distribution is non-uniform and values have different frequencies.</p>
+
+<!-- Q22 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q22</span>
+    <span class="q-text">Ordered sensitive attribute "Score" with values {1, 2, 3, 4, 5}. Overall (20 records): {1:2, 2:4, 3:6, 4:5, 5:3}. Equivalence class (5 records): {1, 1, 2, 4, 5}. Compute numerical EMD. <span class="diff-tag hard">Hard</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Step 1:</span> <strong>Overall (s):</strong> s(1)=2/20=0.10, s(2)=4/20=0.20, s(3)=6/20=0.30, s(4)=5/20=0.25, s(5)=3/20=0.15</div>
+      <div class="step"><span class="step-num">Step 2:</span> <strong>Class (r):</strong> r(1)=2/5=0.40, r(2)=1/5=0.20, r(3)=0, r(4)=1/5=0.20, r(5)=1/5=0.20</div>
+      <div class="step"><span class="step-num">Step 3:</span> <strong>Differences (r − s):</strong>
+        <br>d₁ = 0.40 − 0.10 = 0.30
+        <br>d₂ = 0.20 − 0.20 = 0.00
+        <br>d₃ = 0.00 − 0.30 = −0.30
+        <br>d₄ = 0.20 − 0.25 = −0.05
+        <br>d₅ = 0.20 − 0.15 = 0.05</div>
+      <div class="step"><span class="step-num">Step 4:</span> <strong>Cumulative sums:</strong>
+        <br>C₁ = 0.30
+        <br>C₂ = 0.30 + 0.00 = 0.30
+        <br>C₃ = 0.30 + (−0.30) = 0.00
+        <br>C₄ = 0.00 + (−0.05) = −0.05
+        <br>C₅ = −0.05 + 0.05 = 0.00</div>
+      <div class="step"><span class="step-num">Step 5:</span> Sum of |C| = 0.30 + 0.30 + 0.00 + 0.05 + 0.00 = 0.65</div>
+      <div class="step"><span class="step-num">Step 6:</span> EMD = 1/(5−1) × 0.65 = 0.65/4 = <span class="result">0.1625</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 17 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">17</span> Minimum Class Size to Guarantee t-Closeness</h2>
+<p class="section-desc">How large must an equivalence class be to guarantee a certain t value under worst-case distribution?</p>
+
+<!-- Q23 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q23</span>
+    <span class="q-text">The overall distribution is uniform across 3 values: P(A) = P(B) = P(C) = 1/3. If we want t ≤ 1/3, what is the minimum class size (assuming worst case)? <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Analysis:</span> The worst case for a class of size n is when one value dominates maximally. For a class of size n with 3 possible values, the worst case is one value appearing ⌈n×1⌉ = as many times as possible.</div>
+      <div class="step"><span class="step-num">Key insight:</span> If the class has exactly one of each value (size 3), the distribution matches the overall perfectly → EMD = 0. If size = 2, worst case is {A, A}: P(A)=1, P(B)=P(C)=0, EMD = ½×(|1−1/3|+|0−1/3|+|0−1/3|) = ½×(2/3+1/3+1/3) = 2/3.</div>
+      <div class="step"><span class="step-num">Size = 3:</span> Worst case {A, A, B}: P(A)=2/3, P(B)=1/3, P(C)=0. EMD = ½×(|2/3−1/3|+|1/3−1/3|+|0−1/3|) = ½×(1/3+0+1/3) = 1/3. This equals t.</div>
+      <div class="step"><span class="step-num">Result:</span> Minimum class size = <span class="result">3</span> (and even then, worst case exactly hits t = 1/3). For strict guarantee, we need size ≥ 3.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 18 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">18</span> Recursive (c,t)-Closeness</h2>
+<p class="section-desc">A variant where each equivalence class must be further partitioned and sub-groups must also satisfy t-closeness.</p>
+
+<!-- Q24 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q24</span>
+    <span class="q-text">An equivalence class of 6 records has Disease: {Flu, Flu, Cancer, Cancer, HIV, HIV}. This is split into two sub-groups of 3 each: S1={Flu, Flu, Cancer}, S2={Cancer, HIV, HIV}. Overall: P(Flu)=P(Cancer)=P(HIV)=1/3. Compute EMD for each sub-group against the overall. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">Full class EMD:</span> P(Flu)=2/6=1/3, P(Cancer)=2/6=1/3, P(HIV)=2/6=1/3
+        <br>EMD = 0 (matches overall perfectly)</div>
+      <div class="step"><span class="step-num">S1:</span> P(Flu)=2/3, P(Cancer)=1/3, P(HIV)=0
+        <br>EMD = ½ × (|2/3−1/3| + |1/3−1/3| + |0−1/3|) = ½ × (1/3+0+1/3) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">S2:</span> P(Flu)=0, P(Cancer)=1/3, P(HIV)=2/3
+        <br>EMD = ½ × (|0−1/3| + |1/3−1/3| + |2/3−1/3|) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">Result:</span> While the full class has EMD = 0, its sub-groups have <span class="result">EMD = 1/3</span>. This is the recursive closeness concern — sub-groups may reveal more than the parent class.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 19 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">19</span> Skewness & Similarity Attack Detection</h2>
+<p class="section-desc">Demonstrate the attacks that t-closeness defends against using numerical calculations.</p>
+
+<!-- Q25 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q25</span>
+    <span class="q-text">Overall: {Flu: 5, Cancer: 4, HIV: 1} (10 total). Class Y has 3 records: {Cancer, Cancer, Cancer}. Show the <strong>skewness attack</strong> numerically and how t-closeness detects it. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">l-Diversity check:</span> Class Y has only 1 distinct value → <span class="warn">Fails even 2-diversity</span>. But let's assume a different class that IS l-diverse but still has skewness issues...</div>
+
+      <div class="step"><span class="step-num">Modified Class Y':</span> {Cancer, Cancer, HIV} (2-diverse)
+        <br>Overall: P(Flu)=0.50, P(Cancer)=0.40, P(HIV)=0.10
+        <br>Class: P(Flu)=0, P(Cancer)=2/3≈0.667, P(HIV)=1/3≈0.333</div>
+
+      <div class="step"><span class="step-num">Skewness Attack:</span> An attacker knows someone is in this class. Even though l-diversity holds (2 distinct values), the attacker knows there's a <strong>0% chance</strong> of Flu — this eliminates a disease that has 50% probability overall. They also know there's a 66.7% chance of Cancer vs. 40% overall.</div>
+
+      <div class="step"><span class="step-num">EMD detects this:</span> EMD = ½ × (|0−0.50| + |0.667−0.40| + |0.333−0.10|)
+        <br>= ½ × (0.50 + 0.267 + 0.233) = ½ × 1.00 = <span class="highlight">0.50</span></div>
+
+      <div class="step"><span class="step-num">Result:</span> <span class="result">EMD = 0.50</span> is very high — t-closeness correctly flags this as a privacy risk even though l-diversity was satisfied.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- TYPE 20 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<h2 class="section-title"><span class="num">20</span> Computing t for Merged Equivalence Classes</h2>
+<p class="section-desc">When two classes are merged, compute the new EMD and compare with the individual class EMDs.</p>
+
+<!-- Q26 -->
+<div class="q-card">
+  <div class="q-header" onclick="toggle(this)">
+    <span class="q-number">Q26</span>
+    <span class="q-text">Class C1 has 3 records: {Flu, Flu, Cancer}. Class C2 has 3 records: {Cancer, HIV, HIV}. Overall: P(Flu)=P(Cancer)=P(HIV)=1/3. Compute EMD before and after merging C1 and C2. <span class="diff-tag medium">Medium</span></span>
+    <button class="q-toggle">Show Solution</button>
+  </div>
+  <div class="q-body">
+    <div class="sol-label">Solution</div>
+    <div class="solution">
+      <div class="step"><span class="step-num">EMD(C1):</span> P(Flu)=2/3, P(Cancer)=1/3, P(HIV)=0
+        <br>= ½ × (1/3 + 0 + 1/3) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">EMD(C2):</span> P(Flu)=0, P(Cancer)=1/3, P(HIV)=2/3
+        <br>= ½ × (1/3 + 0 + 1/3) = <span class="highlight">1/3 ≈ 0.333</span></div>
+      <div class="step"><span class="step-num">Merged (C1∪C2):</span> 6 records: {Flu:2, Cancer:2, HIV:2}
+        <br>P(Flu)=2/6=1/3, P(Cancer)=1/3, P(HIV)=1/3
+        <br>EMD = ½ × (0 + 0 + 0) = <span class="highlight">0</span></div>
+      <div class="step"><span class="step-num">Result:</span> Merging reduced EMD from <span class="result">0.333 → 0</span>. Merging complementary classes improves t-closeness but reduces utility (more generalization).</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>t-Closeness Numerical Question Bank — 26 Questions across 20 Types</p>
+  <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--text-dim);">Covers: Categorical EMD, Numerical EMD, Verification, Comparison with k-anonymity &amp; l-diversity, Worst-case analysis, Generalization, Violations, Binary attributes, Theoretical max, End-to-end, Record changes, Entropy, KL-divergence, Multi-attribute, Recursive, Skewness attacks, Merging classes, and more.</p>
+</footer>
+
+</div>
+
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const btn = header.querySelector('.q-toggle');
+  body.classList.toggle('open');
+  btn.textContent = body.classList.contains('open') ? 'Hide Solution' : 'Show Solution';
+}
+</script>
 </body>
-
 </html>
